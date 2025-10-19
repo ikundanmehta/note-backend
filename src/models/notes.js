@@ -1,27 +1,27 @@
 const mongoose = require("mongoose");
 
-const CommentSchema = new mongoose.Schema(
-  {
-    message: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    likes: {
-      type: Number,
-      default: 0,
-    },
-    dislikes: {
-      type: Number,
-      default: 0,
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
+const CommentSchema = new mongoose.Schema({
+  createdBy: {
+    type: String,
+    required: true,
   },
-  { _id: false },
-);
+  message: {
+    type: String,
+    required: true,
+  },
+  likes: {
+    type: Number,
+    default: 0,
+  },
+  dislikes: {
+    type: Number,
+    default: 0,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
 const NotesSchema = new mongoose.Schema(
   {
     heading: {
@@ -35,7 +35,7 @@ const NotesSchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      requires: true,
+      required: true,
       minLenght: 3,
     },
     priority: {

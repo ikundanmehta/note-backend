@@ -77,4 +77,92 @@ notesRouter.get("/note-feed", UserAuth, async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 });
+
+notesRouter.get("/note-save", UserAuth, async (req, res) => {
+  try {
+    const notes = await Notes.find({ saved: req.user._id });
+    res.status(200).json(notes);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+notesRouter.post("/addComment", UserAuth, async (req, res) => {
+  try {
+    const { noteId, message } = req.body;
+
+    const note = await Notes.findById(noteId);
+    if (!note) {
+      return res.status(404).json({ error: "Note not found" });
+    }
+
+    const newComment = {
+      createdBy: req.user._id,
+      message: message,
+    };
+
+    const updatedNote = await Notes.findOneAndUpdate(
+      { _id: noteId },
+      { $push: { comments: newComment } },
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
+
+    if (!updatedNote) {
+      return res.status(404).json({ error: "Note not found during update" });
+    }
+    res.status(201).json({
+      message: "Comment added successfully",
+      comment: newComment,
+    });
+  } catch (err) {
+    const statusCode = err.name === "ValidationError" ? 400 : 500;
+    res.status(statusCode).json({ error: err.message });
+  }
+});
+
+notesRouter.post("/comment-reaction", UserAuth, async (req, res) => {
+  try {
+    const { noteId, commentId, like, dislike } = req.body;
+    const note = await Notes.findById(noteId);
+    if (!note) {
+      return res.status(404).json({ error: "Note not found" });
+    }
+
+    const comment = note.comments.id(commentId);
+    if (!comment) {
+      return res.status(404).json({ error: "Comment not found" });
+    }
+
+    if (like) {
+      comment.likes += 1;
+    } else if (dislike) {
+      comment.dislikes += 1;
+    }
+
+    const updatedNote = await Notes.findOneAndUpdate(
+      { _id: noteId },
+      { $set: { comments: note.comments } },
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
+
+    if (!updatedNote) {
+      return res.status(404).json({ error: "Note not found during update" });
+    }
+    res.status(200).json({
+      message: "Reaction added successfully",
+      comment: comment,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+
 module.exports = notesRouter;
