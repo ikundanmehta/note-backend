@@ -4,7 +4,7 @@ const notesRouter = require("./src/routes/notes");
 const cors = require("cors");
 
 const corsOptions = {
-  origin: "http://localhost:3000" || "https://note-frontend-37dy.onrender.com/",
+  origin: "http://localhost:3000" || "https://note-frontend-37dy.onrender.com",
 
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
