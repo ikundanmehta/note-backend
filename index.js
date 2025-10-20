@@ -10,7 +10,10 @@ const app = express();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://note-frontend-37dy.onrender.com",
+    origin: [
+      "https://note-frontend-37dy.onrender.com",
+      "http://localhost:3000",
+    ],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
     optionsSuccessStatus: 204,
