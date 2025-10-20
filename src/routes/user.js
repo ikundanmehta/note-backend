@@ -48,4 +48,12 @@ userRouter.post("/login", async (req, res) => {
   }
 });
 
+userRouter.get("/logout", async (req, res) => {
+  try {
+    res.clearCookie("token", null).json("Logout successfull");
+  } catch (err) {
+    res.status(400).json(err.message);
+  }
+});
+
 module.exports = userRouter;

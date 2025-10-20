@@ -33,6 +33,10 @@ const NotesSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    createrName: {
+      type: String,
+      required: true,
+    },
     description: {
       type: String,
       required: true,
@@ -41,7 +45,7 @@ const NotesSchema = new mongoose.Schema(
     priority: {
       type: String,
       required: true,
-      enum: ["low", "medium", "high"],
+      enum: ["easy", "medium", "hard"],
     },
     comments: {
       type: [CommentSchema],
