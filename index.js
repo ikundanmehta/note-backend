@@ -9,14 +9,20 @@ const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const app = express();
 app.use(cookieParser());
-app.use(
-  cors({
-    origin: "https://note-frontend-37dy.onrender.com",
-    credentials: true,
-  }),
-);
 
 app.use(express.json());
+
+app.use(
+  cors({
+    origin: [
+      "https://note-frontend-37dy.onrender.com",
+      "http://localhost:3000",
+    ],
+    credentials: true,
+
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  }),
+);
 
 app.use("/api", userRouter);
 app.use("/api/notes", notesRouter);
