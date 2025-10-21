@@ -14,15 +14,11 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: [
-      "https://note-frontend-37dy.onrender.com",
-      "https://note-frontend-k4wy.vercel.app",
-      "http://localhost:3000",
-    ],
+    origin: [process.env.FRONTEND_URL, "http://localhost:3000"],
     credentials: true,
 
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-  }),
+  })
 );
 
 app.use("/api", userRouter);
