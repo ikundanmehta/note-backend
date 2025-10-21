@@ -1,6 +1,7 @@
 const express = require("express");
 const userRouter = require("./src/routes/user");
 const notesRouter = require("./src/routes/notes");
+const http = require("http");
 const cors = require("cors");
 
 require("dotenv").config();
@@ -10,13 +11,8 @@ const app = express();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: [
-      "https://note-frontend-37dy.onrender.com",
-      "http://localhost:3000",
-    ],
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    origin: "https://note-frontend-37dy.onrender.com",
     credentials: true,
-    optionsSuccessStatus: 204,
   }),
 );
 
