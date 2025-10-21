@@ -16,6 +16,7 @@ app.use(
   cors({
     origin: [
       "https://note-frontend-37dy.onrender.com",
+      "https://note-frontend-k4wy-fkuz9am6f-ankur33657s-projects.vercel.app/",
       "http://localhost:3000",
     ],
     credentials: true,
